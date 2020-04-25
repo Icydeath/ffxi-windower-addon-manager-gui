@@ -1,0 +1,153 @@
+﻿<Controls:MetroWindow 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        x:Class="ffxi_addon_manager.MainWindow"
+        mc:Ignorable="d"
+        Title="Addon Manager Settings Tool" Height="534.651" Width="1134.565"  ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Closing="MetroWindow_Closing">
+
+  <Grid Margin="0,0,-6,-2">
+    <Button x:Name="btn_WindowerPath" Content="Browse" Click="Btn_WindowerPath_Click" Style="{StaticResource AccentedSquareButtonStyle}" RenderTransformOrigin="2.571,6.794" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="27" Width="98" BorderBrush="{x:Null}" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+    <TextBox x:Name="txt_WindowerPath" Margin="113,10,0,0" Text="Windower4 path" HorizontalAlignment="Left" VerticalAlignment="Top" Height="27" Width="578" FontStyle="Italic" />
+
+    <ListBox x:Name="lb_Addons" BorderThickness="1" Height="394" Margin="10,68,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="191">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding}" FontSize="14" Foreground="DarkSlateBlue"/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <ListBox x:Name="lb_GlobalAddons" HorizontalAlignment="Left" BorderThickness="1" Height="394" Margin="206,68,0,0" VerticalAlignment="Top" Width="191" MouseDoubleClick="GlobalListBox_MouseDoubleClick" LostFocus="Deselect_ListBoxItem">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding}" FontSize="14" Foreground="Green"/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <!-- CHARACTER -->
+    <ListBox x:Name="lb_Character" HorizontalAlignment="Left" BorderThickness="1" Height="394" Margin="402,68,0,0" VerticalAlignment="Top" Width="191" ScrollViewer.HorizontalScrollBarVisibility="Disabled" LostFocus="Deselect_ListBoxItem">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel>
+            <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="141"/>
+            <ListBox ItemsSource="{Binding Addons}" BorderThickness="0" MouseDoubleClick="CharListBox_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" LostFocus="Deselect_ListBoxItem">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}" Margin="10 0 0 0" FontSize="14" Foreground="Green"/>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <!-- JOBS -->
+    <ListBox x:Name="lb_Jobs" HorizontalAlignment="Left" BorderThickness="1" Height="394" Margin="598,68,0,0" VerticalAlignment="Top" Width="191" ScrollViewer.HorizontalScrollBarVisibility="Disabled" LostFocus="Deselect_ListBoxItem">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel>
+            <TextBlock Text="{Binding Job}" FontWeight="Bold" Width="150"/>
+            <ListBox ItemsSource="{Binding Addons}" BorderThickness="0" MouseDoubleClick="JobListBox_MouseDoubleClick" LostFocus="Deselect_ListBoxItem">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock Text="{Binding}" Margin="10 0 0 0" FontSize="14" Foreground="Green"/>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <!-- ZONE -->
+    <ListBox x:Name="lb_Zones" HorizontalAlignment="Left" BorderThickness="1" Height="394" Margin="794,68,0,0" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled" LostFocus="Deselect_ListBoxItem" Width="320">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border CornerRadius="2" BorderBrush="LightGray" BorderThickness="1" DockPanel.Dock="Top" Padding="3">
+            <StackPanel>
+              <TextBlock Text="{Binding GroupId}" FontWeight="Bold" TextAlignment="Left"/>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="120"/>
+                  <ColumnDefinition Width="146"/>
+                </Grid.ColumnDefinitions>
+                <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Addons}" BorderThickness="0" MouseDoubleClick="ZoneAddonListBox_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" LostFocus="Deselect_ListBoxItem">
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <StackPanel>
+                        <TextBlock Text="{Binding}" Margin="2 0 0 0" FontSize="14" Foreground="Green"/>
+                      </StackPanel>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding Zones}" BorderThickness="0" MouseDoubleClick="ZoneListBox_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled" LostFocus="Deselect_ListBoxItem">
+                  <ListBox.ItemTemplate>
+                    <DataTemplate>
+                      <StackPanel>
+                        <TextBlock Text="{Binding}" Margin="2 0 0 0" Foreground="RoyalBlue"/>
+                      </StackPanel>
+                    </DataTemplate>
+                  </ListBox.ItemTemplate>
+                </ListBox>
+              </Grid>
+            </StackPanel>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <ComboBox x:Name="Cb_Jobs" HorizontalAlignment="Left" Margin="598,465,0,0" VerticalAlignment="Top" Width="93" Controls:TextBoxHelper.Watermark="Job..."/>
+    <ComboBox x:Name="Cb_ZoneGroups" HorizontalAlignment="Left" Margin="794,464,0,0" VerticalAlignment="Top" Width="93" Controls:TextBoxHelper.Watermark="Group..."/>
+    <ComboBox x:Name="Cb_Zones" HorizontalAlignment="Left" Margin="892,464,0,0" VerticalAlignment="Top" Width="125" Controls:TextBoxHelper.Watermark="Zone..."/>
+    <TextBox x:Name="Txt_Character" Controls:TextBoxHelper.Watermark="Name" HorizontalAlignment="Left" Height="23" Margin="402,465,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93"/>
+    <Button x:Name="Btn_AddGlobal" Content="Global" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="255,463,0,0" VerticalAlignment="Top" Width="93" FontWeight="Bold" Click="Btn_AddGlobal_Click" Cursor="Hand" Controls:ControlsHelper.ContentCharacterCasing="Upper" Background="#FFFB8633" BorderBrush="#FFC3C3C3" Foreground="White">
+      <Button.ToolTip>
+        <ToolTip x:Name="tt_global" Content="Addons in Global will load for every character after login." />
+      </Button.ToolTip>
+    </Button>
+    <Button x:Name="Btn_AddCharacter" Content="Character" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="500,464,0,0" VerticalAlignment="Top" Width="93" FontSize="11" FontWeight="Bold" Click="Btn_AddCharacter_Click" Cursor="Hand" Controls:ControlsHelper.ContentCharacterCasing="Upper" Background="#FFFB8633" BorderBrush="#FFC3C3C3" Foreground="White">
+      <Button.ToolTip>
+        <ToolTip x:Name="tt_char" Content="Addons will be loaded for the specified character after login." />
+      </Button.ToolTip>
+    </Button>
+    <Button x:Name="Btn_AddJob" Content="Job" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="696,463,0,0" VerticalAlignment="Top" Width="93" FontWeight="Bold" Click="Btn_AddJob_Click" Cursor="Hand" Controls:ControlsHelper.ContentCharacterCasing="Upper" Background="#FFFB8633" BorderBrush="#FFC3C3C3" Foreground="White">
+      <Button.ToolTip>
+        <ToolTip x:Name="tt_job" Content="Addons will be loaded for the specified job after logging in and/or after changing jobs.&#x0a;To prevent loading for specific characters, add the characters name to the ignore section." />
+      </Button.ToolTip>
+    </Button>
+    <Button x:Name="Btn_AddZone" Content="Zone" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="1021,463,0,0" VerticalAlignment="Top" Width="93" FontWeight="Bold" Click="Btn_AddZone_Click" Cursor="Hand" Controls:ControlsHelper.ContentCharacterCasing="Upper" Background="#FFFB8633" BorderBrush="#FFC3C3C3" Foreground="White">
+      <Button.ToolTip>
+        <ToolTip x:Name="tt_zone" Content="Addons will be loaded zoning into the specified zone(s).&#x0a;To prevent loading for specific characters, add the characters name to the ignore section." />
+      </Button.ToolTip>
+    </Button>
+    <Button x:Name="Btn_SaveSettings" Content="Save Settings" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Right" Margin="0,6,15,0" VerticalAlignment="Top" Width="107" Click="Btn_SaveSettings_Click" FontWeight="Bold" FontSize="14" BorderBrush="{x:Null}" Controls:ControlsHelper.ContentCharacterCasing="Normal"/>
+
+    <CheckBox x:Name="Include_Autoload" Content="Show Autoloaded Addons" HorizontalAlignment="Left" Margin="22,467,0,0" VerticalAlignment="Top" Checked="Include_Autoload_Checked" Unchecked="Include_Autoload_Unchecked" 
+              ToolTip="Addons autoloaded by Windower are marked with an (*)."/>
+
+    <TextBlock x:Name="Txt_Status" HorizontalAlignment="Left" Margin="696,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312" TextAlignment="Center" FontWeight="Bold" Foreground="#FF00B040" Height="25"/>
+    
+    <TextBlock HorizontalAlignment="Center" Margin="11,40,933,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" TextAlignment="Center"
+      Text="ADDONS" FontSize="18" Foreground="#FFFF8E06" FontWeight="Bold" ToolTip="Addons listed were found in your windower/addons folder."/>
+    
+    <TextBlock HorizontalAlignment="Center" Margin="207,40,737,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" TextAlignment="Center"
+      Text="GLOBAL" FontSize="18" Foreground="#FFFF8E06" FontWeight="Bold" ToolTip="Addons in Global will load for every character after login."/>
+    
+    <TextBlock HorizontalAlignment="Center" Margin="403,40,541,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" TextAlignment="Center"
+      Text="BY CHARACTER" FontSize="18" Foreground="#FFFF8E06" FontWeight="Bold" ToolTip="Addons will be loaded for the specified character after login."/>
+    
+    <TextBlock HorizontalAlignment="Center" Margin="599,40,345,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="191" TextAlignment="Center"
+      Text="BY JOB" FontSize="18" Foreground="#FFFF8E06" FontWeight="Bold" ToolTip="Addons will be loaded for the specified job after logging in and/or after changing jobs.&#x0a;To prevent loading for specific characters, add the characters name to the ignore section."/>
+    
+    <TextBlock HorizontalAlignment="Center" Margin="795,40,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="320" TextAlignment="Center"
+      Text="BY ZONE" FontSize="18" Foreground="#FFFF8E06" FontWeight="Bold" ToolTip="Addons will be loaded zoning into the specified zone(s).&#x0a;To prevent loading for specific characters, add the characters name to the ignore section."/>
+
+  </Grid>
+</Controls:MetroWindow>
